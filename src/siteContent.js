@@ -1,4 +1,4 @@
-const galleryBase = '/stitch-gallery';
+const galleryBase = `${import.meta.env.BASE_URL}stitch-gallery`;
 
 export const navigation = [
   { label: 'Home', href: '#home' },
