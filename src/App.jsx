@@ -1,6 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import siteContent from './siteContent'
 import './App.css'
+
+const themeStorageKey = 'jedidiah-theme'
 
 const galleryLayouts = [
   { speed: 0.08, span: 'gallery-card--wide', shift: '2vh' },
@@ -13,7 +15,24 @@ const galleryLayouts = [
   { speed: -0.05, span: 'gallery-card--tall', shift: '2vh' },
 ]
 
+function getPreferredTheme() {
+  if (typeof window === 'undefined') {
+    return 'light'
+  }
+
+  const storedTheme = window.localStorage.getItem(themeStorageKey)
+
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    return storedTheme
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+}
+
 function App() {
+  const [theme, setTheme] = useState(getPreferredTheme)
   const {
     navigation,
     hero,
@@ -28,6 +47,19 @@ function App() {
     featuredWorks[2],
     galleryEntries[2],
   ]
+
+  useEffect(() => {
+    const root = document.documentElement
+    const themeColor = document.querySelector('meta[name="theme-color"]')
+
+    root.dataset.theme = theme
+    root.style.colorScheme = theme
+    window.localStorage.setItem(themeStorageKey, theme)
+
+    if (themeColor) {
+      themeColor.setAttribute('content', theme === 'dark' ? '#101413' : '#fafaf5')
+    }
+  }, [theme])
 
   useEffect(() => {
     const root = document.documentElement
@@ -109,9 +141,36 @@ function App() {
             </a>
           ))}
         </nav>
-        <a className="site-email" href={`mailto:${contact.email}`}>
-          {contact.email}
-        </a>
+        <div className="site-tools">
+          <button
+            type="button"
+            className={`theme-toggle glass-shell theme-toggle--${theme}`}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+            aria-pressed={theme === 'dark'}
+            onClick={() =>
+              setTheme((currentTheme) =>
+                currentTheme === 'light' ? 'dark' : 'light',
+              )
+            }
+          >
+            <span className="theme-toggle__track" aria-hidden="true">
+              <span className="theme-toggle__thumb">
+                <span className="theme-toggle__orb" />
+              </span>
+            </span>
+            <span className="theme-toggle__labels" aria-hidden="true">
+              <span className={theme === 'light' ? 'is-active' : ''}>
+                Lightroom
+              </span>
+              <span className={theme === 'dark' ? 'is-active' : ''}>
+                Darkroom
+              </span>
+            </span>
+          </button>
+          <a className="site-email" href={`mailto:${contact.email}`}>
+            {contact.email}
+          </a>
+        </div>
       </header>
 
       <div aria-hidden="true" className="scroll-meter">
