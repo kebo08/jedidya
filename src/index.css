@@ -1,0 +1,106 @@
+:root {
+  --surface: #fafaf5;
+  --surface-low: #f3f4ee;
+  --surface-dim: #d5dcd0;
+  --ink: #2e342d;
+  --muted: #5b6159;
+  --accent: #596056;
+  --accent-soft: #dde5d7;
+  --outline: rgba(118, 124, 116, 0.18);
+  --font-body: 'Manrope', sans-serif;
+  --font-display: 'Newsreader', serif;
+
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--surface) 0%, #f4f5ee 50%, var(--surface-dim) 100%);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  --scroll-progress: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+body {
+  min-width: 320px;
+  background: transparent;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(4rem, 10vw, 8.4rem);
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+p {
+  margin: 0;
+}
+
+::selection {
+  background: rgba(89, 96, 86, 0.18);
+}
+
+@media (max-width: 760px) {
+  :root {
+    font-size: 16px;
+  }
+}
